@@ -1,13 +1,8 @@
 # Remote Procedure Call
 
-- [ ] figmatize a transport diagram
-- [ ] figmatize a arcitechture diagram (stubbe!!)
-- [ ] API timeline
-- [ ] envelop (figmatize)
-
 ## Abstract
 
-in this paper!
+This article provides a simple introduction and discussion of the subject Remote Procedure Call as a protocol, also known as RPC.
 
 • The first states the problem.
 • The second states why the problem is a problem.
@@ -25,6 +20,8 @@ Remote Procedure Call, also known as RPC, is a protocol which during runtime pro
 
 When making a remote procedure call it starts at the client environment where a request containing parameters if necessary is transferred through a network layer to the server. When the server receives the request, a method is executed in the remote environment that returns a response which is then transferred back to the client; this action is the procedure.
 
+![Remote Procedure Call model](assets/rpc-model.png)
+
 ## Functionalities
 
 A contract between the two systems is established through the shared interface to give mutual constraints upon the requests and responses which is handled by a stub.
@@ -32,6 +29,8 @@ A contract between the two systems is established through the shared interface t
 A stub is the result when the shared interface is provided to the RPC library. After providing the interface, the stub contains the implemented methods which can be called in the application. Calling the stub methods transforms the parameters to a suitable format for transportation, which is then received at the other system as a request. This formatting is also referred to as marshaling. When the request is received the system unmarshals it to make it readable. Marshaling and unmarshaling happens between both systems every time data is transferred.
 
 Remote procedure call can be synchronous or asynchronous depending on the implementation. In most cases the procedures are synchronous which means the client system is suspended when making a request until a response is received.
+
+![Procedure sequence](assets/procedure-sequence.png)
 
 ## Project References & Our Implementations
 
@@ -99,21 +98,17 @@ Simple Object Access Protocol also known as SOAP is a messaging protocol for exc
 
 It is based upon schemas that define the constraints and structure of the request. When a request is received on the server, the schema validates if the format is correct. If the request is accepted, it will be processed. However if the envelope body doesn't match the schemas' requirements, the request will be rejected.
 
-`Insert xml envelope diagram here`
+![Soap envelope](assets/soap-envelope.png)
 
 ### Representational State Transfer
 
 Representational State Transfer or REST is a broadly supported architectural style for client-server communication. REST sends information by using json or xml data structure via multiple predefined endpoints instead of sending information through methods. This gives the client a more flexible interaction to the server but is still constraint to the HTTP methods and headers together with the required body content and structure. REST doesn't use any interface which means the client needs to read the API documentation before using it.
 
-`Hvorfor valgte vi at bruge rpc og ikke rest i lsd - forklar her hvorfor +1`
-
-_REST describes “what to get and set”, and RPC describes “what to do”._
-
 ### Graph Query Language
 
 Graph Query Language also called GraphQL is a newer query language standard for APIs. This implementation uses the client-server model where the server exposes a single endpoint to the client. Strongly typed schemas are used to define the possible structures of a query that a client can request to the server. These schemas, also referred to as contracts, gives the possibility to create advanced queries, consisting of the desired response data structure. Queries like these will be executed as a request to the server which sends a response only containing the requested data. One of the advantages of using these queries is to prevent under- and over-fetching which results in faster response time and reduced data consumption.
 
-_RMI vs REST vs GraphQL - development in flexibility between the three_
+![Api timeline](assets/api-timeline.png)
 
 ## Conclusion
 
