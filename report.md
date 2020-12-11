@@ -2,12 +2,7 @@
 
 ## Abstract
 
-This article provides a simple introduction and discussion of the subject Remote Procedure Call as a protocol, also known as RPC.
-
-• The first states the problem.
-• The second states why the problem is a problem.
-• The third is my startling sentence.
-• The fourth states the implication of my startling sentence.
+Remote Procure Call is a protocol used when a system requests a service from another system without having knowledge of how that other system works. This article provides a simple introduction to Remote Procedure Call, also referred to by the name RPC. The topics of some of the advantages and disadvantages of RPC is presented alongside with some personal experiences dealing with the protocol and its alternatives.
 
 • state the problem
 • say why it is interesting
