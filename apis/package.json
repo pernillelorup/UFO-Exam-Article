@@ -1,28 +1,36 @@
 {
-  "name": "apis",
-  "version": "1.0.0",
-  "main": "src/index.ts",
-  "license": "MIT",
-  "dependencies": {
-    "@node-rpc/client": "^2.3.1",
-    "express": "^4.17.1",
-    "nano-time": "^1.0.0",
-    "node-fetch": "^2.6.1",
-    "ts-node": "^9.1.1",
-    "typescript": "^4.1.2"
-  },
-  "devDependencies": {
-    "@types/express": "^4.17.9",
-    "@types/node": "^14.14.12",
-    "@types/node-fetch": "^2.5.7"
-  },
-  "scripts": {
-    "start": "yarn ts-node src/index.ts",
-    "rest:server": "yarn ts-node src/rest/server.ts",
-    "rpc:server": "yarn ts-node src/rpc/server.ts"
-    // "res:clientt:client": "yarn ts-node clientest/client.ts",
-    // "graphql:server": "yarn ts-node src/graphql/server.ts",
-    // "rpc": ":clientyarn ts-node src/rpc/index.tsclient",
-    // "graphql": "yarn ts-node src/graphql/index.ts"
-  }
+	"name": "apis",
+	"version": "1.0.0",
+	"main": "src/index.ts",
+	"license": "MIT",
+	"dependencies": {
+		"@node-rpc/client": "^2.3.1",
+		"@node-rpc/server": "^2.2.0",
+		"@types/graphql": "^14.5.0",
+		"axios": "^0.21.0",
+		"co-body": "^6.1.0",
+		"express": "^4.17.1",
+		"express-graphql": "^0.12.0",
+		"graphql": "^15.4.0",
+		"nano-time": "^1.0.0",
+		"node-fetch": "^2.6.1",
+		"ts-node": "^9.1.1",
+		"typescript": "^4.1.2"
+	},
+	"devDependencies": {
+		"@types/axios": "^0.14.0",
+		"@types/express": "^4.17.9",
+		"@types/express-graphql": "^0.9.0",
+		"@types/node": "^14.14.12",
+		"@types/node-fetch": "^2.5.7"
+	},
+	"scripts": {
+		"start": "yarn ts-node src/index.ts",
+		"rest:server": "yarn ts-node src/rest/server.ts",
+		"rest:client": "yarn ts-node src/rest/client.ts",
+		"rpc:server": "yarn ts-node src/rpc/server.ts",
+		"rpc:client": "yarn ts-node src/rpc/client.ts",
+		"graphql:server": "yarn ts-node src/graphql/server.ts",
+		"graphql:client": "yarn ts-node src/graphql/client.ts"
+	}
 }
