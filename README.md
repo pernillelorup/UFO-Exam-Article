@@ -1,29 +1,42 @@
 # Remote Procedure Call
 
-- [ ] The protocol supports multiple transport protocols. The most common protocol is HTTP while UDP and MQ can be applied - Remeber argument!
 - [ ] figmatize a transport diagram
 - [ ] figmatize a arcitechture diagram (stubbe!!)
-- [ ] skriv mere om RPC generelt + opbygning
-- [ ] Over fetching & under fetching
+- [ ] API timeline
+- [ ] envelop (figmatize)
+
+## Abstract
+
+in this paper!
+
+• The first states the problem.
+• The second states why the problem is a problem.
+• The third is my startling sentence.
+• The fourth states the implication of my startling sentence.
+
+• state the problem
+• say why it is interesting
+• say what your solution achieves
+• say what follows from your solution
 
 ## Introduction
 
-Remote Procedure Call, also known as RPC, is a protocol which during runtime provides a connection between two or more systems. This protocol is a client-server model in which the client has knowledge of the server credentials. A connection between the two systems are obtained through a shared interface and the use of an RPC library. RPC offers the possibility to request a remote or local service while hiding the internal functionality from the user.  
-Through the shared interface a contract between the two systems is established to give mutual constraints upon the requests and responses which is handled by a stub.
+Remote Procedure Call, also known as RPC, is a protocol which during runtime provides a connection between two or more systems. This protocol is a client-server model in which the client has knowledge of the server credentials. A connection between the two systems are obtained through a shared interface and the use of an RPC library. RPC offers the possibility to request a remote or local service while hiding the internal functionality from the user.
 
-A stub is the result when the shared interface is provided to the RPC library. After providing the interface, the stub contains the implemented methods which can be called in the application. Calling the stub methods creates a marshaling of the parameters so they can be transported to the other system as a request. When the request is received the system unmarshals it to make it readable. Marshaling and unmarshaling happens between both systems every time data is transferred.
+When making a remote procedure call it starts at the client environment where a request containing parameters if necessary is transferred through a network layer to the server. When the server receives the request, a method is executed in the remote environment that returns a response which is then transferred back to the client; this action is the procedure.
 
-Making a remote procedure call starts at the client environment where a request containing parameters if necessary is transferred through a network layer to the server. When the server receives the request, a method is executed in the remote environment that returns a response which is then transferred back to the client; this action is the procedure.
+## Functionalities
+
+A contract between the two systems is established through the shared interface to give mutual constraints upon the requests and responses which is handled by a stub.
+
+A stub is the result when the shared interface is provided to the RPC library. After providing the interface, the stub contains the implemented methods which can be called in the application. Calling the stub methods transforms the parameters to a suitable format for transportation, which is then received at the other system as a request. This formatting is also referred to as marshaling. When the request is received the system unmarshals it to make it readable. Marshaling and unmarshaling happens between both systems every time data is transferred.
 
 Remote procedure call can be synchronous or asynchronous depending on the implementation. In most cases the procedures are synchronous which means the client system is suspended when making a request until a response is received.
 
 ## Project References & Our Implementations
 
-Our first assignment related to RPC was in the System Integration course where the main focus of the assignment was to get acquainted with and illustrate the use of RPC. (https://github.com/Soft20/RPC-Assignment)
-We solved the assignment by making use of the library `node-rpc` (https://github.com/dkirchhof/node-rpc#readme) together with a strongly typed programming language, which we in our case decided would be TypeScript.
-`skriv mere om node-rpc`
-
-`indsæt kodeeksempel på brug af node-rpc`
+Our first assignment related to RPC was in the System Integration course where the main focus of the assignment was to get acquainted with and illustrate the use of RPC.
+We solved the assignment by making use of an RPC library for Node.js together with a strongly typed programming language, which we in our case decided would be TypeScript.
 
 After getting acquainted with RPC we chose to use it as the foundation in our project from the Large System Development course. This new project gave us a broader understanding of the protocol and how to optimize the implementation. One of the key features when using RPC is the possibility to create two concurrent systems that work independently until production. Because the client and server share an interface we can implement a fake on the client-side to be used during development. The fake substitutes the server with hardcoded implementations to test the client system's functionality.
 
@@ -33,47 +46,82 @@ Because the criteria of the Large System Development assignment was to build two
 
 **Advantages:**
 
-- It is possible to develop two or more concurrent (parallel) systems
-- The requests and responses are decided in advance through the common interface
-- Possibility for distributed subsystems
-- By distributing the systems, performance will be optimized. (better resources)
+- **The possibility to develop to or more concurrent systems**
+  By dividing the development into smaller systems, the possibility of distributing workload to multiple internal or external developers is obtained, which can result in an increased efficiency.
+  <br>
 
-_RPC allows the usage of the applications in a distributed environment that is not only in the local environment._
+- **The contract creates full transparency**
+  The contract provides a specified description of all methods and necessary parameters in the common interface. This gives all developers an understanding of their constraints and limitations regarding the connection between the systems. These constraints give the possibility to obtain a better collaboration from external developers.
+  <br>
 
-_With RPC code, re-writing and re-developing effort is minimized._
-_The effort needs to re-write and re-develop the code is minimum._
+- **Possibility for distributed subsystems**
+  When distributing the development into smaller subsystems, each subsystem has the ability to use the desired amount of resources available to it. This can optimize CPU and memory consumption by expanding it over multiple machines an thereby increase the performance significantly.
+  <br>
+
+- **Suitable for developing large systems**
+  Because of the possibility of distributing multiple system features across different teams and servers, the use of RPC is convenient for developing large systems.
+  <br>
+
+- **Underlying procedures are hidden from client**
+  The client is only provided with methods from the shared interface which gives the developer knowledge of what response the client receives. Because of this, the developer doesn't have to be concerned about how the server's implementation handled the request, which will provide more focus and avoid a bloated system.
+  <br>
+
+- **Subsystems are more maintainable**
+  Smaller systems are easier to develop and maintain due to the better overview of the system, instead of navigating through a large system and waste time understanding the surrounded functionality. A subsystem limits the amount of functionalities and thereby increases the level of understanding so more time can be spend on developing.
+  <br>
 
 **Disadvantages:**
 
-- ff
+- **Response time is dependant on network bandwidth**
+  If the server and client are located on different machines, an outgoing network connection needs to be established. The user's response time will be increased in case of a low network bandwidth on one of the systems.
+  <br>
 
-_Remote procedure calling (and return) time (i.e., overheads) can be significantly lower than that for a local procedure._ ??
+- **Distributed RPC systems are vulnerable to failure**
+  These types of distributed systems are more vulnerable to failure in comparison to other systems where all implementation is gathered in one place. This is because the multiple distributed systems rely on each other in production and therefore if one of the systems where to disconnect, the others would be affected as well.
+  <br>
 
-_This mechanism is highly vulnerable to failure as it involves a communication system, another machine, and another process._
+- **Not a flexible connection**
+  The interaction between the server and client is limited to the contract methods. Only methods with the required parameters can be used and nothing else.
+  <br>
 
-_The cost of the process is increased because of a remote procedure call._
+- **It isn't easy to update the contract.**
+  The contract defines how the two systems can interact with each other. If the contract needs to be modified all implementations need to be implemented accordingly. Depending on the degree of the modification a significant amount of code can end up being rewritten.
+  <br>
 
-## Alternatives (RMI, REST)
+- **Integration testing of the system is limited during development**
+  The uncertainty of proper integration between systems throughout the development is difficult to test, because different systems can be developed in separation.
 
-### Remote Method Invocation
+## Alternatives
 
-Remote Method Invocation also known as RMI is a Java specific equivalent to RPC. RMI uses, just like RPC,
+### Simple Object Access Protocol
 
-_RMI uses java's native `Remote` interface and implements it to the targeted class for remote invocation. Instead of only sending parameters to the other subsystem RMI sends the remote class and calls the methods when arrived._
+Simple Object Access Protocol also known as SOAP is a messaging protocol for exchanging data via XML. The message being exchanged is referred to as an envelope, which is mandatory because it indicates the beginning and the end of a message. The envelope consist of an optional header and a obligatory body.
 
-RMI uses, just like RPC, a transfer between method parameters and
+It is based upon schemas that define the constraints and structure of the request. When a request is received on the server, the schema validates if the format is correct. If the request is accepted, it will be processed. However if the envelope body doesn't match the schemas' requirements, the request will be rejected.
+
+`Insert xml envelope diagram here`
 
 ### Representational State Transfer
 
-Representational State Transfer or REST is a broadly supported architectural style for client-server communication. REST sends information by using json or xml data structure instead of sending information through methods. This gives the client a more dynamic interaction to the server but is still constraint to the HTTP methods and headers together with the required body content and structure. REST doesn't use any interface which means the client needs to read the API documentation before using it.
+Representational State Transfer or REST is a broadly supported architectural style for client-server communication. REST sends information by using json or xml data structure via multiple predefined endpoints instead of sending information through methods. This gives the client a more flexible interaction to the server but is still constraint to the HTTP methods and headers together with the required body content and structure. REST doesn't use any interface which means the client needs to read the API documentation before using it.
+
+`Hvorfor valgte vi at bruge rpc og ikke rest i lsd - forklar her hvorfor +1`
 
 _REST describes “what to get and set”, and RPC describes “what to do”._
 
-### GraphQL
+### Graph Query Language
+
+Graph Query Language also called GraphQL is a newer query language standard for APIs. This implementation uses the client-server model where the server exposes a single endpoint to the client. Strongly typed schemas are used to define the possible structures of a query that a client can request to the server. These schemas, also referred to as contracts, gives the possibility to create advanced queries, consisting of the desired response data structure. Queries like these will be executed as a request to the server which sends a response only containing the requested data. One of the advantages of using these queries is to prevent under- and over-fetching which results in faster response time and reduced data consumption.
 
 _RMI vs REST vs GraphQL - development in flexibility between the three_
 
 ## Conclusion
+
+Remote Procedure Call is a powerful protocol with many advantages. Working with it in multiple projects along with research and our previous knowledge of its alternatives in SOAP, REST and GraphQL, we have come to learn that RPC is a protocol suitable for developing large systems. If the contract is correctly specified between the systems it creates a strong base for development.
+
+A perfect tool for everything doesn't exist. The compromise you give by developing a distributed RPC system is your response time which can be reduced while your operation performance can be increased. A system with heavy operations would prefer to use a distributed system like RPC, while a fast responding system wouldn't.
+
+## References
 
 [microsoft](https://docs.microsoft.com/en-us/openspecs/windows_protocols/ms-tsgu/76796f19-9e6f-48b9-8b8f-4ef9f197056b#gt_8a7f6700-8311-45bc-af10-82e10accd331)
 
@@ -87,5 +135,8 @@ _RMI vs REST vs GraphQL - development in flexibility between the three_
 
 _[ibm](https://www.ibm.com/support/knowledgecenter/ssw_aix_71/commprogramming/ch8_rpc.html)_
 
-Marshaling:
-In computer science, marshalling or marshaling is the process of transforming the memory representation of an object to a data format suitable for storage or transmission, and it is typically used when data must be moved between different parts of a computer program or from one program to another.
+_[API timeline](https://www.altexsoft.com/blog/soap-vs-rest-vs-graphql-vs-rpc/)_
+
+\subsection*{Specifications}
+The code was executed on a MacBook Pro (Retina, 13-inch, Early 2015) with a 2,9 GHz Dual-Core Intel Core i5 Processor. The MacBook has a memory of 8 GB 1867 MHz DDR3.\\*
+The code was executed with Java version 13.0.2.
